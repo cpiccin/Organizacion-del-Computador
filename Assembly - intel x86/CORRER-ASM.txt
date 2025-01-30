@@ -1,0 +1,3 @@
+nasm file.asm -f elf64
+gcc file.o -o f.out -no-pie
+./f.out

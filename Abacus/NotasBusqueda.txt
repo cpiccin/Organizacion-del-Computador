@@ -1,0 +1,44 @@
+Microinstrucciones para: FASE DE BUSQUEDA
+
+(RPI) ----> RDM
+
+Se lee como:
+"El contenido del RPI es el que viaja y se persiste en el RDM"
+Se abre la compuerta 1 y 2
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+|  Ej: Se da como dato que el valor inicial del RPI vale 30 [16], el primer componente arranca en 300 [16]
+|
+|  RPI = 300 [16] --> el RPI va a contener, tiene capacidad de 12 bits (300 [16] = 0011 0000 0000 [2])
+|
+|  Los 12 bits representan la direccion de memoria de una celda
+|
+|  |260F[16]| celda en direccion 300[16] con contenido 260F[16]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+((RDM)) ----> RM
+"El contenido de la celda que esta en el RDM es el que quiero dejar en el RM"
+<<<< Es una operacion de lectura >>>>
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+|  Cuando termine  la operacion el RM va a tener los bits: 
+|  RM = 0001 0011 0000 1111 [2] = 260F [16]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+(RM) ----> RI 
+"El contenido del RM es el que viaja y se persiste en el RI"
+Se abre la compuerta 3 y 4
+
+(RPI)+1 ----> RPI 
+"El contenido del RPI se autoincrementa en 1 y se almacena en el propio RPI, apunta a la celda siguiente"
+<<<< El incremento es via el SI: secuenciador de instrucciones >>>>
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+|  Ahora:
+|  RPI = 301 [16]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

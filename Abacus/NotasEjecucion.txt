@@ -1,0 +1,59 @@
+Microinstrucciones para: FASE DE EJECUCION
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Los primeros 4 bits que esten en el RI significan para la maquina el 
+	- CO: codigo de operacion (ID de instruccion), referencia sobre lo que le estoy pidiendo a la maquina.
+Los siguientes 12 bits es para el campo 
+ 	- OP: operando, que es el dato. El CPU lo va a usar como referencia a una celda de memoria que lo va a usar para buscar el contenido para dejarlo en el AC.
+
+|======|=======|
+|4 bits|12 bits|
+|======|=======|
+   CO     OP
+
+AC: acumulador, es un registro temporario para que la maquina pueda hacer operaciones.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+Operacion de CARGA (LOAD):
+	- Cargar contenido de la celda apuntada por el campo OP y dejarlo en el acumulador.
+
+(OP) ----> RDM
+"Referencia de OP va a RDM"
+((RDM)) ----> RM
+"El contenido de la celda referenciada en RDM va a RM"
+<<<< Operacion de lectura >>>>
+(RM) ----> AC
+"El contenido de RM se persiste en el AC"
+
+
+Operacion de ALMACENAMIENTO (STORE):
+	- Copia el contenido  del AC y lo almacena en la celda de la memoria que corresponda a la direccion que este referencia en el OP del RI. El OP contiene la direccion de donde se quiere guardar el contenido del AC.
+
+(OP) ----> RDM
+"El contenido del OP se copia en el RDM"
+(AC) ----> RM
+"El contenido del AC viaja al RM"
+(RM) ----> (RDM)
+"El contenido del RM se guarda en la celda a la que apunta la direccion del RDM"
+<<<< Operacion de escritura >>>>
+
+
+Operacion de SUMA(ADD):
+	- Parte de un dato del AC y le adiciona, le agrega algo que esta referenciado en la memoria
+
+(OP) ----> RDM
+"El contendio del OP se copia en el RDM para ir a buscarlo"
+((RDM)) ----> RM
+"El contendio de la celda referenciada en RDM va a RM"
+<<<< Operacion de lectura >>>>
+(RM)+(AC) ----> AC
+"A lo que se fue a buscar a la memoria se le adiciona lo que este en el AC y queda en el AC"
+El circuito electrico dentro de la UAL realiza la suma.
+
+
+Operacion de BIFURCACION:
+	- Permite la ruptura de secuencia. Evalua condiciones contra un valor del AC. Es un "if". EJ: si AC == 0 se cumple la condicion y se bifurca.
+
+(OP) ----> RPI
+"Si se cumple la condicion, el contenido del OP va a ir al RPI"

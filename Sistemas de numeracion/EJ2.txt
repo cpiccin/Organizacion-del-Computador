@@ -1,0 +1,71 @@
+Dado A que representa la configuración en base 8 de un número almacenado en formato BPF c/signo de 24 bits y B que representa la configuración en base 10 de otro
+número almacenado en formato zoneado de 3 bytes se pide:
+
+A = 40300514 B = 16053686
+
+a)Indicar cuales son los números almacenados en base 10
+b)Restarle a A el número de padrón (A-PADRÓN) en formato BPF c/signo de 24 bits indicando la validez del resultado (por favor escriba su numero de padron de
+forma clara al inicio de este punto)
+c) Tomar el valor del resultado del punto anterior si es válido o el valor de B si no lo fuera y almacenarlo en formato BPFlotante IEEE 754 de precisión simple,
+dando su configuración hexadecimal
+
+
+a) A = 40300514 [8] en BPF c/s 24b
+   B = 16053686 [10] en zoneado de 3 bytes
+
+Para A:
+
+40300514 [8] = 1000 0001 1000 0001 0100 1100 [2]
+
+1er bit es 1 ---> Not+1 ---> 0111 1110 0111 1110 1011 0100 [2]
+Paso a base 10 ----> A = -8289972 [10] 
+
+Para B:
+
+16053686 [10] = F4F5B6 [16] ----> B = -456 [10]
+
+
+b) Padron = 77625 [10]
+
+Paso a P a formato BPF c/s de 24b:
+77625 [10] = 0000 0001 0010 1111 0011 1001 [2]
+
+Paso a A a formato BPF c/s de 24b:
+-8289972 [10] = 0111 1110 0111 1110 1011 0100 [2] ---> Not+1
+1000 0001 1000 0001 0100 1100 [2]
+
+Quiero A - P que es lo mismo que A + Cb(P)
+
+Cb(P) ---> Not+1 ---> 1111 1110 1101 0000 1100 0111 [2]
+
+ 11111 1111        11 1  1 1    ----> acarreo 11, no hay Overflow
+  1000 0001 1000 0001 0100 1100 	  la operacion es valida
++ 1111 1110 1101 0000 1100 0111
+  -----------------------------
+  1000 0000 0101 0010 0001 0011 [2]
+
+
+c) C = 1000 0000 0101 0010 0001 0011 [2] 
+
+-----------------------------------------------------
+|  normalizo = 1.00000000101001000010011*10^23      |
+|  EE = 23 + 127 = 10011010 [2]		            |
+|  01001101000000000101001000010011 [2]		    |
+|	                                            |
+|------ESTA MAL!!!!! <<<<PORQUE EL PRIMER BIT EN    |
+|CORRESPONDE AL SIGNO DEL BPF C/S, ENTONCES HAGO    |
+|NOT+1 Y ENCUENTRO EL VALOR ABSOLUTO EN BASE 2 DEL  |
+|NUMERO A ALMACENAR>>>>		                    |
+-----------------------------------------------------
+
+Not+1 ---> 0111 1111 1010 1101 1110 1101 [2]
+
+Normalizo = 1,1111111010110111101011*10^22
+EE = 22+127 = 149 [10] = 10010101 [2]
+
+1 10010101 11111110101101111010110
+
+Respuesta ----> CAFF5BD6 [16]
+
+
+

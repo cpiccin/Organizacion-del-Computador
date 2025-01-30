@@ -1,0 +1,4 @@
+Ingresar por teclado un texto y luego un caracter e imprimir por pantalla:
+    - El texto de forma invertida
+    - La cantidad de apariciones del caracter en el texto
+    - El porcentaje de esas apariciones respecto de la longitud total del texto

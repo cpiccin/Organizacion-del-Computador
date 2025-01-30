@@ -1,0 +1,95 @@
+*****************************************************************
+
+Dado A que representa la configuración en base 10 de un número almacenado en formato empaquetado de 3 bytes, se pide:
+a) Indicar cuál es el número almacenado.
+b) Almacenar el número en formato BPFlotante IEEE 754 de precisión simple, dando su configuración hexadecimal.
+A = (69659)10
+
+
+
+69659 [10] = 01101B [16] empaquetado de 3 bytes
+
+a) -1101 [10]
+
+b) base [10] a base [2] ---> -10001001101 [2]
+normalizo ---> -1,0001001101*10^1010 [2]
+exceso = 10 [10] + 127 [10] = 137 [10] = 10001001 [2]
+
+signo = 1 
+exponente = 10001001
+mantisa = 00010011010000000000000
+
+1 10001001 00010011010000000000000
+
+Resultado ----> C489A000 [16]
+
+
+*****************************************************************
+
+2. Dado B que representa la configuración hexadecimal de un número almacenado en formato BPFlotante IEEE 754 de precisión simple, se pide:
+a) Indicar cuál es el número almacenado.
+b) Restar ambos números (el almacenado en A menos el almacenado en B) en formato BPF c/signo de 16 bits indicando la validez del resultado.
+B = (C5002000)16
+
+
+a) C5002000 [16] = 11000101000000000010000000000000 [2]
+
+signo = 1 = negativo 
+EE = Exp + 127 ---> 10001010 [2] = Exp + 127 [10] ---> Exp = 138-127 = 11 [10]
+mantisa = 1.00000000010000000000000 [2] = 1.0009765625 [10]
+
+numero ---> 1.0009765625*2^11 = 2050 [10]
+
+Resultado = -2050 [10]
+
+b) A = C489A000 [16]   B = -2050 [10]
+
+Quiero A-B en BPF c/s de 16b que es lo mismo que A + Cb(B)
+	
+B = -2050 [10] = -0000 1000 0000 0010 [2]
+
+Busco el Cb(B):
+		Not+1 ---> 1111 0111 1111 1101
+			 + 0000 0000 0000 0001
+			   -------------------
+			   1111 0111 1111 1110 [2]
+
+Ahora paso a BPF c/s 16b
+                   1
+  0000 1000 0000 0001
++ 0000 0000 0000 0001
+  -------------------
+  0000 1000 0000 0010 [2]
+
+
+Paso a BPF c/s 16b    
+A = -0000 0100 0100 1101 [2] 
+	Not+1 ---> 1111 1011 1011 0010
+		 + 0000 0000 0000 0001
+		   -------------------
+		   1111 1011 1011 0011 [2]
+
+ 11111            1   --------> el acarreo es 11 [2] no hay Overflow!!
+  1111 1011 1011 0011
++ 0000 1000 0000 0010
+  -------------------
+  0000 0011 1011 0101
+
+Resultado ----> A - B = 0000 0011 1011 0101 [2] (VALIDO)
+
+*****************************************************************
+
+3. Almacenar el resultado de 2b) en BPFlotante IEEE 754 de precisión simple, dando su configuración octal.
+
+0000 0011 1011 0101
+normalizo ---> 1,110110101*10^(9[10])
+EE = 9+127 = 136 [10] = 1000 1000 [2]
+
+0 10001000 11011010100000000000000
+
+2 = cubicroot(8)
+
+001 000 100 011 011 010 100 000 000 000 000
+ 1   0   4   3   3   2   4   0   0   0   0
+
+ Resultado ----> 10433240000 [8]

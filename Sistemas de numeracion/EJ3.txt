@@ -1,0 +1,48 @@
+Dado A que representa la configuración en base 10 de un número almacenado en formato binario de punto fijo con signo de de 2 bytes y B que representa la configuración en base 8 de otro número almacenado en formato empaquetado de 3 bytes se pide:
+A = 11111(10)
+B = 250415(8)
+a) Indicar cuales son los números almacenados en base 10.
+b) Realizar la división entera de su número de padrón por 5. A eso lo llamamos P. Restar el valor almacenado en A con P (A - P) en formato BPF c/signo de 16 bits indicando la validez del resultado. Ej padrón 100123 => P es 20024
+c) Tomar el valor del resultado del punto anterior si es válido o el valor de B si no lo fuera y almacenarlo en formato BPFlotante IEEE 754 de precisión simple, dando su configuración octal.
+
+----------------------------------------------------
+A = 11111 [10] en formato BPF c/s 2 bytes
+B = 250415 [8] en formato empaquetado de 3 bytes
+
+
+a) A = 0010 1011 0110 0111 [2] ----> 11111 [10]
+
+B = 01510D [16] ----> -1510 [10]
+
+-----------------------------------------------------
+b) Padron = 100123 ---> 100123|_5__
+							 3 20024
+P = 20024
+
+Quiero A - P = A + Cb(P) en formato BPF c/s 16b
+
+Cb(P) = -P
+P = 0100 1110 0011 1000 [2] --Not+1--> 1011 0001 1100 1000 [2]
+
+ 00100 0111	1000 0000 ----> el resultado es valido, no hay Overflow
+  0010 1011 0110 0111
++ 1011 0001 1100 1000
+  -------------------
+  1101 1101 0010 1111 [2]
+
+-----------------------------------------------------
+C = 1101 1101 0010 1111 [2]
+
+Primero digito no cuenta porque es el signo del BPF c/s
+Hago Not+1 para encontrar el valor absoluto en [2]
+
+0010 0010 1101 0001 [2]
+
+Normalizo = 1,0001011010001*10^13
+EE = 13+127 = 1000 1100 [2]
+
+1 1000 1100 00010110100010000000000 [2] 
+
+En configuracion octal = 30602642000 [8]
+
+
