@@ -21,11 +21,10 @@ ARM está basado en una arquitectura load/store, reduciendo así el set de instr
 `R15` es el Program Counter (PC). El RPI en abacus, tiene la direccion de la proxima direccion a ser ejecutada. Como todas las instrucciones tienen longitud de 32 bits y deben estar alineadas a word (cada word es de 4 bytes, esto significa que cada instrucción comienza en una posición de memoria divisible por 4), el valor almacenado en el registro Contador del Programa (PC) es almacenado en los bits [31:2] con los bits [1:0].
 
 El *Current Program Status Register* (CPSR) contiene indicadores condicionales y otros bits de estado. No se interactuamos con este registro
-
-![cpsr](https://github.com/user-attachments/assets/90ad0b0b-643d-4e75-9241-dbd0d9265cfe)
+![cpsr](../assets/ARM/img1.png)
 
 ### Condition flags
-![fefe](https://github.com/user-attachments/assets/6e832438-abee-4a50-b546-ead58befc2be)
+![fefe](../assets/ARM/img2.png)
 
 ### Sintaxis
 - Las etiquetas pueden definirse utilizando una secuencia de caracteres alfanuméricos, barras inferiores (_) y puntos (.) que no comienzan con un número.
@@ -73,7 +72,7 @@ El *Current Program Status Register* (CPSR) contiene indicadores condicionales y
 ### Formato de instrucciones
 Cada instrucción es codificada en una 32-bit word.
 
-![aaa](https://github.com/user-attachments/assets/268cb383-83d2-41ed-8352-d9a2d18d35bc)
+![cpsr](../assets/ARM/img3.png)
 
 Una instrucción especifica un código de ejecución condicional (Condition), el código OP (OP code), dos o tres registros (Rn, Rd y Rm) y alguna otra información adicional.
 
@@ -127,11 +126,11 @@ La instruccion carga consecutivamente valores de memoria en los registros `R0`, 
 Las instrucciones de bifurcación condicionales contienen un desplazamiento de 24 bits con signo que se agrega al contenido actualizado del PC para generar la dirección de destino de la bifurcación.
 En la arquitectura ARM, una ejecución condicional de una instrucción permite que una instrucción se ejecute solo si se cumple una condición específica.
 
-![aaa](https://github.com/user-attachments/assets/0c410d86-bbaf-48ac-963a-5ce236c4d8a3)
+![cpsr](../assets/ARM/img4.png)
 
 Por ejemplo la instruccion `BEQ` que bifurca si igual a 0, o sea si el flag Z esta seteado en 1
 
-![ssssss](https://github.com/user-attachments/assets/dca7ce7a-1aa6-4d25-8451-459e893cbf17)
+![cpsr](../assets/ARM/img5.png)
 
 ### Barrel Shifter
 ARM no tiene instrucciones de shift. En su lugar tiene un barrel shifter que provee un mecanismo que lleva a cabo shifts como parte de otras instrucciones.
@@ -184,7 +183,7 @@ El offset puede aplicarse
 ##### Direccionamiento Pre-Indexado
 Ejemplo: `STR r0, [r1, #12]`
 
-![weedfef](https://github.com/user-attachments/assets/9cf46974-600f-4341-8daa-db8823ad7b03)
+![cpsr](../assets/ARM/img6.png)
 
 - Para almacenar en la dirección 0x1f4
 	- `STR r0, [r1, #-12]`
@@ -196,7 +195,7 @@ Ejemplo: `STR r0, [r1, #12]`
 ##### Direccionamiento Post-Indexado
 Ejemplo: `STR r0, [r1], #12`
 
-![adas](https://github.com/user-attachments/assets/564c5a94-5580-4fb6-90e7-6a722569963d)
+![cpsr](../assets/ARM/img7.png)
 
 - Para auto-incrementar el Registro Base a la dirección 0x1f4
 	- `STR r0, [r1], #-12`
@@ -219,10 +218,10 @@ En ARMSim# se utilizan interrupciones de software para operaciones comunes de en
 
 La sintaxis para hacer un llamada es: `swi <swi code>`
 
-![edfefef](https://github.com/user-attachments/assets/a0a2cf1c-3be8-485f-bca8-5552220fa980)
+![cpsr](../assets/ARM/img8.png)
 
 ### Modos de direccionamiento 
-![eeeeee](https://github.com/user-attachments/assets/84bcfab5-fb7b-45f3-859d-afba1cb12427)
+![cpsr](../assets/ARM/img9.png)
 
 - **Registro a registro:** Es entre dos registros `mov r0, r1`
 - **Absoluto:** La dirección de memoria es especificada directamente en la instrucción. `ldr r0, mem`
